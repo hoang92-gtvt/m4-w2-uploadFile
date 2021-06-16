@@ -48,10 +48,11 @@ public class ProductController {
         MultipartFile multipartFile = productForm.getImage();
         String fileName = multipartFile.getOriginalFilename();
         try {
-            FileCopyUtils.copy(productForm.getImage().getBytes(), new File(fileUpload + fileName));
+            FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+
         Product product = new Product(productForm.getId(), productForm.getName(),
                 productForm.getDescription(), fileName);
         productService.save(product);
@@ -59,6 +60,9 @@ public class ProductController {
 //        ModelAndView modelAndView = new ModelAndView("/index");
 //        modelAndView.addObject("productForm", productForm);
 //        modelAndView.addObject("message", "Created new product successfully !");
+
+
+
 
         return "redirect:/product";
     }
